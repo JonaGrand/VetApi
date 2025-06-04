@@ -22,12 +22,12 @@ from src.routes.user_routes import user_bp
 
 from config import app_config
 
-# from flask_cors import CORS
+from flask_cors import CORS
 
 def create_app():
     app = Flask(__name__)
     # Configurar CORS para permitir solicitudes desde localhost
-    # CORS(app)
+    CORS(app)
 
     # Cargar configuración desde config.py
     app.config.from_object(app_config)

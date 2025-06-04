@@ -32,10 +32,10 @@ CREATE TABLE  Users (
 );
 
 CREATE TABLE Sessions(
-	id varchar(200) PRIMARY KEY NOT NULL,
+    id varchar(200) PRIMARY KEY NOT NULL,
     user_id varchar(9) NOT NULL,
-    created_at date NOT NULL,
-	FOREIGN KEY (user_id) REFERENCES Users(dni)
+    expires_at date NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES Users(dni) ON DELETE CASCADE
 );
 
 CREATE TABLE Appointments (
