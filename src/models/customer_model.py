@@ -7,8 +7,8 @@ class Customer(db.Model):
     dni = db.Column(db.String(9), primary_key=True, nullable=False)
     name = db.Column(db.String(200), nullable=False)
     surnames = db.Column(db.String(200), nullable=False)
-    mail = db.Column(db.String(200))
-    phone = db.Column(db.Integer(9))
+    mail = db.Column(db.String(200), nullable=False)
+    phone = db.Column(db.String(9), nullable=False)
     
     def to_dict(self):
         return {

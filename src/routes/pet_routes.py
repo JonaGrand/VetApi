@@ -2,7 +2,7 @@ from flask import Blueprint, request, jsonify
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
 from src.database.db import db
-from src.models.pets_model import Pet
+from src.models.pet_model import Pet
 from sqlalchemy.exc import IntegrityError
 
 # Define el Blueprint para las rutas de Pets

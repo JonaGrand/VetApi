@@ -1,10 +1,6 @@
 from src.database.db import db
 from werkzeug.security import generate_password_hash, check_password_hash
 
-#class RolEnum(enum.Enum):
-#    VETERINARIO = 'veterinario'
-#    ASMINISTRADOR = 'administrador'
-#    SECRETARIO = 'secretario'
 
 class User(db.Model):
     __tablename__ = 'Users'
@@ -15,7 +11,7 @@ class User(db.Model):
     surnames = db.Column(db.String(200), nullable=False)
     rol = db.Column(db.String(200), nullable=False) # vet, admin, gest
     mail = db.Column(db.String(200), nullable=False, unique=True)  # Asumo que el correo debe ser único
-    phone = db.Column(db.String(200), nullable=False)
+    phone = db.Column(db.String(9), nullable=False)
     admission_date = db.Column(db.Date, nullable=False)
 
     # Hashear contraseña

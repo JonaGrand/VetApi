@@ -7,7 +7,7 @@ class Pet(db.Model):
     birth_date = db.Column(db.Date, nullable=False)
     animal = db.Column(db.String(200), nullable=False)
     breed = db.Column(db.String(200), nullable=False)
-    customer_id = db.Column(db.String(200), nullable=False)
+    customer_id = db.Column(db.String(9), nullable=False)
 
     def to_dict(self):
         return {

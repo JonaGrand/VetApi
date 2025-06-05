@@ -1,12 +1,9 @@
-create database veterinary_db;
-Use veterinary_db;
-
 create table Customers(
     dni      varchar(9)   not null primary key,
     name     varchar(200) not null,
     surnames varchar(200) not null,
-    mail     varchar(200) null,
-    phone    int          null
+    mail     varchar(200) not null,
+    phone    varchar(9)   not null
 );
 
 create table Pets(
@@ -16,8 +13,7 @@ create table Pets(
     animal      varchar(200) not null,
     breed       varchar(200) not null,
     customer_id varchar(9)   not null,
-    constraint pets_ibfk_1
-        foreign key (customer_id) references Customers (dni)
+    constraint pets_ibfk_1 foreign key (customer_id) references Customers (dni)
 );
 
 create index customer_id on Pets (customer_id);
@@ -29,7 +25,7 @@ create table Users(
     surnames       varchar(200) not null,
     rol            varchar(200) not null,
     mail           varchar(200) not null,
-    phone          varchar(200) not null,
+    phone          varchar(9)   not null,
     admission_date date         not null
 );
 
@@ -45,7 +41,7 @@ create table Appointments(
     constraint appointments_ibfk_2 foreign key (pet_id) references Pets (num_chip)
 );
 
-create index pet_id  on Appointments (pet_id);
+create index pet_id on Appointments (pet_id);
 
 create index user_id on Appointments (user_id);
 

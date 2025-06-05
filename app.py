@@ -1,16 +1,9 @@
 import logging
 from datetime import timedelta
-
 from flask import Flask, Blueprint
+from flask_cors import CORS
 from dotenv import load_dotenv
-import os
-
-from flask_jwt_extended import create_access_token
-from flask_jwt_extended import get_jwt_identity
-from flask_jwt_extended import jwt_required
 from flask_jwt_extended import JWTManager
-
-from src.routes.auth_routes import auth_bp
 
 load_dotenv() # Cargar vairables de entorno
 
@@ -19,10 +12,14 @@ from src.database.db import db
 
 #Importar BLUEPRINTS
 from src.routes.user_routes import user_bp
+from src.routes.auth_routes import auth_bp
+from src.routes.pet_routes import pet_bp
+#from src.routes.appointment_routes import appointment_bp
+from src.routes.customer_routes import customer_bp
 
 from config import app_config
 
-from flask_cors import CORS
+
 
 def create_app():
     app = Flask(__name__)
@@ -44,6 +41,9 @@ def create_app():
     # Resto
     api_v1_bp.register_blueprint(auth_bp)
     api_v1_bp.register_blueprint(user_bp)
+    api_v1_bp.register_blueprint(pet_bp)
+    api_v1_bp.register_blueprint(customer_bp)
+ #   api_v1_bp.register_blueprint(appointment_bp)
 
     # Registrar Blueprint
     app.register_blueprint(api_v1_bp)
