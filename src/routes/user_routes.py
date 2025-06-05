@@ -35,7 +35,7 @@ def get_user_by_dni(dni):
         return jsonify({'message': 'User not found'}), 404
 
 # Solo deberia de poder crear usuarios (empleados) el rol "admin"
-@user_bp.route('/', methods=['POST'])
+@user_bp.route('/', methods=['POST', 'OPTIONS'])
 @jwt_required()
 def create_user():
 

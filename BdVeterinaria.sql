@@ -1,69 +1,58 @@
-#CREATE DATABASE veterinary_db;
-USE veterinary_db;
+create database veterinary_db;
+Use veterinary_db;
 
-CREATE TABLE Customers (
-	dni varchar(9) PRIMARY KEY,
-    name varchar(200) NOT NULL,
-    surnames varchar(200) NOT NULL,
-    mail varchar(200),
-    phone int(9)
+create table Customers(
+    dni      varchar(9)   not null primary key,
+    name     varchar(200) not null,
+    surnames varchar(200) not null,
+    mail     varchar(200) null,
+    phone    int          null
 );
 
-CREATE TABLE Pets (
-	num_chip int PRIMARY KEY,
-    name varchar(200) NOT NULL,
-    birth_date date NOT NULL,
-	animal varchar(200) NOT NULL,
-    breed varchar(200) NOT NULL,
-    customer_id varchar(9) NOT NULL,
-    FOREIGN KEY (customer_id) REFERENCES Customers(dni)
+create table Pets(
+    num_chip    int          not null primary key,
+    name        varchar(200) not null,
+    birth_date  date         not null,
+    animal      varchar(200) not null,
+    breed       varchar(200) not null,
+    customer_id varchar(9)   not null,
+    constraint pets_ibfk_1
+        foreign key (customer_id) references Customers (dni)
 );
 
-# Nuestra tabla de usuarios
-CREATE TABLE  Users (
-	dni varchar(9) PRIMARY KEY,
-    name varchar(200) NOT NULL,
-    password varchar(200) NOT NULL,
-    surnames varchar(200) NOT NULL,
-    rol varchar(200) NOT NULL,
-    mail varchar(200) NOT NULL,
-    phone varchar(200) NOT NULL,
-    admission_date date NOT NULL
+create index customer_id on Pets (customer_id);
+
+create table Users(
+    dni            varchar(9)   not null primary key,
+    name           varchar(200) not null,
+    password       varchar(200) not null,
+    surnames       varchar(200) not null,
+    rol            varchar(200) not null,
+    mail           varchar(200) not null,
+    phone          varchar(200) not null,
+    admission_date date         not null
 );
 
-CREATE TABLE Sessions(
-    id varchar(200) PRIMARY KEY NOT NULL,
-    user_id varchar(9) NOT NULL,
-    expires_at date NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES Users(dni) ON DELETE CASCADE
+create table Appointments(
+    id           int          not null primary key,
+    type         varchar(200) not null,
+    description  varchar(200) not null,
+    date         datetime     not null,
+    user_id      varchar(9)   not null,
+    pet_id       int          not null,
+    treatment_id int          not null,
+    constraint appointments_ibfk_1 foreign key (user_id) references Users (dni),
+    constraint appointments_ibfk_2 foreign key (pet_id) references Pets (num_chip)
 );
 
-CREATE TABLE Appointments (
-	id int PRIMARY KEY,
-    type varchar(200) NOT NULL,
-    description varchar(200) NOT NULL,
-    date datetime NOT NULL, # Cambiar por DATETIME
-    user_id varchar(9) NOT NULL,
-    pet_id int NOT NULL,
-    treatment_id int NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES Users(dni),
-	FOREIGN KEY (pet_id) REFERENCES Pets(num_chip)
-	# FOREIGN KEY (tratamiento) REFERENCES Tratamiento(id)
+create index pet_id  on Appointments (pet_id);
+
+create index user_id on Appointments (user_id);
+
+create table Sessions(
+    id         varchar(200) not null primary key,
+    user_id    varchar(9)   not null,
+    expires_at datetime     not null,
+    constraint sessions_ibfk_1 foreign key (user_id) references Users (dni) on delete cascade
 );
 
-
-# NO EJECUTAR TODAVIA # 
-#CREATE TABLE Producto (
-#	id int PRIMARY KEY,
-#    nombre varchar(200) NOT NULL,
-#    precio_total float NOT NULL,
-#	cantidad int NOT NULL
-#);
-
-#CREATE TABLE Tratamiento (
-#	id int PRIMARY KEY,
-#    descripcion varchar(200) NOT NULL,
-#    precio_total float NOT NULL,
-#    producto int NOT NULL,
-#    FOREIGN KEY (producto) REFERENCES Producto(id)
-#);

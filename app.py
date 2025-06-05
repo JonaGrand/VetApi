@@ -43,7 +43,7 @@ def create_app():
     api_v1_bp = Blueprint('api_v1_bp', __name__, url_prefix='/api/v1')
     # Resto
     api_v1_bp.register_blueprint(auth_bp)
-    api_v1_bp.register_blueprint(user_bp, url_prefix='/users')
+    api_v1_bp.register_blueprint(user_bp)
 
     # Registrar Blueprint
     app.register_blueprint(api_v1_bp)
