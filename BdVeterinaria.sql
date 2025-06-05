@@ -42,7 +42,7 @@ CREATE TABLE Appointments (
 	id int PRIMARY KEY,
     type varchar(200) NOT NULL,
     description varchar(200) NOT NULL,
-    date date NOT NULL,
+    date datetime NOT NULL, # Cambiar por DATETIME
     user_id varchar(9) NOT NULL,
     pet_id int NOT NULL,
     treatment_id int NOT NULL,

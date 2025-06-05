@@ -13,16 +13,12 @@ import logging
 # Define el Blueprint para las rutas de empleados
 auth_bp = Blueprint('auth_bp', __name__, url_prefix='/auth')
 
-@auth_bp.route('/login', methods=['GET'])
-def hello():
-    return "HOLA"
-
 @auth_bp.route('/login', methods=['POST'])
 def login():
     dni = request.json.get("dni", None)
     password = request.json.get("password", None)
 
-
+    # Consulta a la BD
     user = User.query.filter_by(dni=dni).first()
 
     if not user or not user.check_password(password):  # Usa el metodo check_password.
@@ -36,7 +32,6 @@ def login():
     # Se decodifica el token para poder ver el expiration date
     decoded_token = decode_token(access_token)
     expiration_time = datetime.fromtimestamp(decoded_token['exp'])
-    print(expiration_time)
 
     # Se crea el registro en la base de datos
     try:
@@ -61,7 +56,7 @@ def login():
 @auth_bp.route('/logout', methods=['POST'])
 @jwt_required()
 def logout():
-    # Cojo el jwt que develve el front
+    # Cojo el jti (id del jwt) que devuelve el front
     jti = get_jwt()['jti']
 
     session = Session.query.get(jti)
