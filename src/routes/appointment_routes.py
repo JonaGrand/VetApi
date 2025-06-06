@@ -78,7 +78,7 @@ def create_appointment():
 
 @appointment_bp.route('/<string:id>', methods=['DELETE'])
 @jwt_required()
-def delete_appointment(dni):
+def delete_appointment(id):
     appointment = Appointment.query.filter_by(id=id).first()
 
     if appointment:
