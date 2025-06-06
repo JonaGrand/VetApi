@@ -14,9 +14,16 @@ user_bp = Blueprint('user_bp', __name__, url_prefix='/users')
 @user_bp.route('/', methods=['GET'])
 @jwt_required()
 def get_users():
-    users = User.query.all()
-    user_list = [user.to_dict() for user in users]
+    rol = request.args.get('rol')
+    query = User.query
 
+    # Si se le infica un rol por los parametros, se filtra
+    if rol:
+        query = query.filter_by(rol=rol)
+
+    # Se hace la función
+    users = query.all()
+    user_list = [user.to_dict() for user in users]
     if users:
         return jsonify(user_list), 200
     else:
