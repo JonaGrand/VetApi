@@ -58,19 +58,19 @@ def create_appointment():
     date = data['date']
     user_id = data['user_id'] # Al veterinario que llevará a cabo el tratamiento
     pet_id = data['pet_id']
-    treatment_id = data['treatment_id']
 
-    if not id or not type or not description or not date or not user_id or not pet_id or not treatment_id:
+    if not id or not type or not description or not date or not user_id or not pet_id:
         return jsonify({'message': 'Missing required fields'}), 400
 
     try:
-        new_appointment = Appointment(id=id, type=type, description=description, date=date, user_id=user_id, pet_id=pet_id, treatment_id=treatment_id)
+        new_appointment = Appointment(id=id, type=type, description=description, date=date, user_id=user_id, pet_id=pet_id)
         db.session.add(new_appointment)
         db.session.commit()
         return jsonify({'message': 'Appointment created successfully'}), 201
     except IntegrityError:
         db.session.rollback()
-        return jsonify({'message': 'Appointment already exists'}), 409
+        logging.exception('IntegrityError')
+        return jsonify({'message': 'Error creating apointment'}), 409
     except Exception as e:
         db.session.rollback()
         logging.error(f"Error creating Appointment: {e}")

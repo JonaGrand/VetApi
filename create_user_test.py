@@ -14,7 +14,7 @@ with app.app_context():
             dni='12345678T',
             name='test',
             surnames='test',
-            rol='vet', # Usa el miembro del Enum directamente
+            rol= 'admin',
             mail='testsqlalchemy@example.com',
             phone='123456789',
             admission_date=date(2024, 1, 15)

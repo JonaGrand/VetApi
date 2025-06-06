@@ -2,7 +2,7 @@ from src.database.db import db
 
 class Pet(db.Model):
     __tablename__ = 'Pets'
-    num_chip = db.Column(db.Integer, primary_key=True ,nullable=False)
+    num_chip = db.Column(db.String(9), primary_key=True ,nullable=False)
     name = db.Column(db.String(200), nullable=False)
     birth_date = db.Column(db.Date, nullable=False)
     animal = db.Column(db.String(200), nullable=False)

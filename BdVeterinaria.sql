@@ -7,7 +7,7 @@ create table Customers(
 );
 
 create table Pets(
-    num_chip    int          not null primary key,
+    num_chip    varchar(10)  not null primary key,
     name        varchar(200) not null,
     birth_date  date         not null,
     animal      varchar(200) not null,
@@ -19,24 +19,24 @@ create table Pets(
 create index customer_id on Pets (customer_id);
 
 create table Users(
-    dni            varchar(9)   not null primary key,
-    name           varchar(200) not null,
-    password       varchar(200) not null,
-    surnames       varchar(200) not null,
-    rol            varchar(200) not null,
-    mail           varchar(200) not null,
-    phone          varchar(9)   not null,
-    admission_date date         not null
+    dni            varchar(9)                    not null primary key,
+    name           varchar(200)                  not null,
+    password       varchar(200)                  not null,
+    surnames       varchar(200)                  not null,
+    rol            enum ('vet', 'admin', 'gest') not null,
+    mail           varchar(200)                  not null,
+    phone          varchar(9)                    not null,
+    admission_date date                          not null
 );
 
 create table Appointments(
-    id           int          not null primary key,
-    type         varchar(200) not null,
-    description  varchar(200) not null,
-    date         datetime     not null,
-    user_id      varchar(9)   not null,
-    pet_id       int          not null,
-    treatment_id int          not null,
+    id          varchar(10)  not null primary key,
+    type        varchar(200) not null,
+    description varchar(200) not null,
+    date        datetime     not null,
+    user_id     varchar(9)   not null,
+    pet_id      varchar(10)  not null,
+    constraint appointments_fk_user foreign key (user_id) references Users (dni) on delete cascade,
     constraint appointments_ibfk_1 foreign key (user_id) references Users (dni),
     constraint appointments_ibfk_2 foreign key (pet_id) references Pets (num_chip)
 );

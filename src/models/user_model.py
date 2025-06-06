@@ -1,3 +1,4 @@
+from sqlalchemy import Enum
 from src.database.db import db
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -9,7 +10,7 @@ class User(db.Model):
     name = db.Column(db.String(200), nullable=False)
     password = db.Column(db.String(200), nullable=False)
     surnames = db.Column(db.String(200), nullable=False)
-    rol = db.Column(db.String(200), nullable=False) # vet, admin, gest
+    rol = db.Column(Enum('vet', 'admin', 'gest', name='user_roles_enum'), nullable=False)
     mail = db.Column(db.String(200), nullable=False, unique=True)  # Asumo que el correo debe ser único
     phone = db.Column(db.String(9), nullable=False)
     admission_date = db.Column(db.Date, nullable=False)
