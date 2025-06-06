@@ -30,7 +30,7 @@ create table Users(
 );
 
 create table Appointments(
-    id          varchar(10)  not null primary key,
+    id          integer  not null primary key auto_increment,
     type        varchar(200) not null,
     description varchar(200) not null,
     date        datetime     not null,

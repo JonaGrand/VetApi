@@ -13,7 +13,7 @@ class Config:
     # Configuración JWT
     JWT_SECRET_KEY = os.getenv('JWT_KEY')
     JWT_TOKEN_LOCATION = ["cookies"]
-    JWT_ACCESS_TOKEN_EXPIRES = timedelta(hours=8)
+    JWT_ACCESS_TOKEN_EXPIRES = timedelta(minutes=15)
     JWT_SESSION_COOKIE = False  # Para aplicar la caducidad
     JWT_COOKIE_CSRF_PROTECT = False  # Considera habilitarlo en producción
     JWT_COOKIE_SECURE = False  # True en producción con HTTPS
@@ -25,8 +25,6 @@ class DevelopmentConfig(Config):
 class ProductionConfig(Config):
     DEBUG = False
     JWT_COOKIE_SECURE = True # Forzar HTTPS para cookies en producción
-
-# Puedes añadir más configuraciones (TestingConfig, etc.)
 
 # Selecciona la configuración a usar, por ejemplo, basándote en una variable de entorno
 # Por defecto, usa DevelopmentConfig si FLASK_ENV no está configurado o es 'development'

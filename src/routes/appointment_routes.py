@@ -52,7 +52,7 @@ def create_appointment():
 
     data = request.get_json()
 
-    id = data['id']
+    # id = data['id']
     type = data['type']
     description = data['description']
     date = data['date']
@@ -63,7 +63,7 @@ def create_appointment():
         return jsonify({'message': 'Missing required fields'}), 400
 
     try:
-        new_appointment = Appointment(id=id, type=type, description=description, date=date, user_id=user_id, pet_id=pet_id)
+        new_appointment = Appointment( type=type, description=description, date=date, user_id=user_id, pet_id=pet_id)
         db.session.add(new_appointment)
         db.session.commit()
         return jsonify({'message': 'Appointment created successfully'}), 201

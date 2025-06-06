@@ -32,6 +32,7 @@ def login():
     # Se decodifica el token para poder ver el expiration date
     decoded_token = decode_token(access_token)
     expiration_time = datetime.fromtimestamp(decoded_token['exp'])
+    logging.error(expiration_time)
 
     # Se crea el registro en la base de datos
     try:

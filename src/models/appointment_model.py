@@ -4,7 +4,7 @@ from src.database.db import db
 class Appointment(db.Model):
     __tablename__ = 'Appointments'
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     type = db.Column(db.String(200), nullable=False)
     description = db.Column(db.String(200), nullable=False)
     date = db.Column(db.DateTime, nullable=False)
