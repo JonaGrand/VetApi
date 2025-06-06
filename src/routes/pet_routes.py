@@ -3,21 +3,24 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 
 from src.database.db import db
 from src.models.pet_model import Pet
+from src.models.user_model import User
 from sqlalchemy.exc import IntegrityError
+
+import logging
 
 # Define el Blueprint para las rutas de Pets
 pet_bp = Blueprint('pet_bp', __name__, url_prefix='/pets')
 
 @pet_bp.route('/', methods=['GET'])
 @jwt_required()
-def get_users():
+def get_pets():
     pets = Pet.query.all()
     pets_list = [pet.to_dict() for pet in pets]
 
     if pets:
         return jsonify(pets_list), 200
     else:
-        return jsonify({'message': 'No pets'}), 404
+        return jsonify({'message': 'No pets found'}), 404
 
 
 @pet_bp.route('/<string:num_chip>', methods=['GET'])
@@ -39,27 +42,27 @@ def create_pet():
     # Obtener ID(dni) usuario actual.
     current_user_dni = get_jwt_identity()
     # Sacamos su rol desde la BD
-    current_user = Pet.query.filter_by(dni=current_user_dni).first()
+    current_user = User.query.filter_by(dni=current_user_dni).first()
 
     # Verifica si el usuario actual tiene el rol de vet o gest
-    if current_user.rol != 'vet' or current_user.role != 'gest':
-        return jsonify({'message': 'Unauthorized: Only users with the rol vet/gest are able to create pets '}), 403
+#    if current_user.rol != 'vet' or current_user.role != 'gest':
+#        return jsonify({'message': 'Unauthorized: Only users with the rol vet/gest are able to create pets'}), 403
 
     data = request.get_json()
 
     num_chip = data.get('num_chip')
     name = data.get('name')
-    brith_date = data.get('brith_date')
+    birth_date = data.get('birth_date')
     animal = data.get('animal')
     breed = data.get('breed')
     customer_id = data.get('customer_id')
 
 
-    if not num_chip or not name or not brith_date or not animal or not breed or not customer_id:
+    if not num_chip or not name or not birth_date or not animal or not breed or not customer_id:
         return jsonify({'message': 'Missing required fields'}), 400
 
     try:
-        new_pet = Pet(num_chip=num_chip, name=name, brith_date=brith_date, animal=animal, breed=breed, customer_id=customer_id)
+        new_pet = Pet(num_chip=num_chip, name=name, birth_date=birth_date, animal=animal, breed=breed, customer_id=customer_id)
         db.session.add(new_pet)
         db.session.commit()
         return jsonify({'message': 'Pet created successfully'}), 201
@@ -68,7 +71,7 @@ def create_pet():
         return jsonify({'message': 'Pet already exists'}), 409
     except Exception as e:
         db.session.rollback()
-        # logging.error(f"Error creating user: {e}")
+        logging.error(f"Error creating pet: {e}")
         return jsonify({'message': 'Error creating pet'}), 500
 
 @pet_bp.route('/<string:num_chip>', methods=['DELETE'])

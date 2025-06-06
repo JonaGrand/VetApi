@@ -45,7 +45,7 @@ def create_customer():
 
     # Verifica si el usuario actual tiene el rol de administrador
 #    if current_user.rol != 'gest' or current_user.rol != 'vet':
-#        return jsonify({'message': 'Unauthorized: Only gest o vet can create customers'}), 403
+#        return jsonify({'message': 'Unauthorized: Only users with the rol gest or vet are able to create customers'}), 403
 
     data = request.get_json()
 

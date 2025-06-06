@@ -14,7 +14,7 @@ from src.database.db import db
 from src.routes.user_routes import user_bp
 from src.routes.auth_routes import auth_bp
 from src.routes.pet_routes import pet_bp
-#from src.routes.appointment_routes import appointment_bp
+from src.routes.appointment_routes import appointment_bp
 from src.routes.customer_routes import customer_bp
 
 from config import app_config
@@ -43,7 +43,7 @@ def create_app():
     api_v1_bp.register_blueprint(user_bp)
     api_v1_bp.register_blueprint(pet_bp)
     api_v1_bp.register_blueprint(customer_bp)
- #   api_v1_bp.register_blueprint(appointment_bp)
+    api_v1_bp.register_blueprint(appointment_bp)
 
     # Registrar Blueprint
     app.register_blueprint(api_v1_bp)

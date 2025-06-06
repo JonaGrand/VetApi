@@ -9,7 +9,7 @@ class Appointment(db.Model):
     description = db.Column(db.String(200), nullable=False)
     date = db.Column(db.DateTime, nullable=False)
     user_id = db.Column(db.String(9), db.ForeignKey('Users.dni'), nullable=False)
-    pet_id = db.Column(db.Integer(9), db.ForeignKey('Pets.num_chip'), nullable=False)
+    pet_id = db.Column(db.Integer, db.ForeignKey('Pets.num_chip'), nullable=False)
     treatment_id = db.Column(db.Integer, nullable=False)
 
     def to_dict(self):
