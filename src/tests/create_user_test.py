@@ -1,4 +1,5 @@
-from app import create_app, db  # Importa tu app y db
+from app import create_app
+from src.database.db import db
 from src.models.user_model import User
 from datetime import date
 # Si estás hasheando contraseñas, importa tu función de hash aquí
