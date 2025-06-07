@@ -52,3 +52,29 @@ create table Sessions(
     constraint sessions_ibfk_1 foreign key (user_id) references Users (dni) on delete cascade
 );
 
+
+# PROCEDIMIENTO PARA LIMPIAR LOS JWT PERIODICAMENTE (8horas)
+
+# Habilitar el programador de eventos:
+SET GLOBAL event_scheduler = ON;
+
+# Crear el procedimiento
+DELIMITER //
+
+CREATE PROCEDURE CleanExpiredSessions()
+BEGIN
+    DELETE FROM Sessions
+    WHERE expires_at < NOW();
+END //
+
+DELIMITER ;
+
+# Creas el evento
+CREATE EVENT IF NOT EXISTS DailyCleanExpiredSessions
+ON SCHEDULE EVERY 1 DAY
+STARTS CURRENT_TIMESTAMP
+DO
+  CALL CleanExpiredSessions();
+
+# ver los eventos creados
+SHOW EVENTS;

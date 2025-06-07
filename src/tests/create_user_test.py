@@ -35,4 +35,3 @@ with app.app_context():
         print(f"Error al crear el Usuario: {e}")
     finally:
         db.session.close()
-        db.session.close()

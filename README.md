@@ -24,3 +24,12 @@ VetApi/
 ├── config.py --> Archivo con la configuración esencial de la App (flask, SqlAlchemy, ...)
 ├── crate_user_test.py --> Archivo con usuario de test
 └── app.py --> Aplicación principal.
+
+# 1. Ejecutar app Flask:
+
+(Tienes que estar en la raiz del proyecto: VetApi/)
+
+**Aplicación principal:** python3 app.py
+**Tests:**
+- create_user_test.py:  python3 -m src.tests.create_user_test
+- db_test.py: python3 src.test.db_connection_test

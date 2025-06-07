@@ -15,39 +15,42 @@ auth_bp = Blueprint('auth_bp', __name__, url_prefix='/auth')
 
 @auth_bp.route('/login', methods=['POST'])
 def login():
-    dni = request.json.get("dni", None)
+    dni_input = request.json.get("dni", None) # Renombrado para claridad
     password = request.json.get("password", None)
 
     # Consulta a la BD
-    user = User.query.filter_by(dni=dni).first()
+    user = User.query.filter_by(dni=dni_input).first()
 
     if not user or not user.check_password(password):  # Usa el metodo check_password.
         return jsonify({"msg": "DNI o contraseña incorrectos"}), 401
 
-    # Se crea el JWT
-    access_token = create_access_token(identity=user.dni)
-    jti = get_jti(access_token)
-
-
-    # Se decodifica el token para poder ver el expiration date
-    decoded_token = decode_token(access_token)
-    expiration_time = datetime.fromtimestamp(decoded_token['exp'])
-    logging.error(expiration_time)
-
-    # Se crea el registro en la base de datos
     try:
+        # Eliminar sesiones existentes para este usuario ANTES de crear una nueva.
+        # Se usa user.dni para asegurar que es el DNI canónico de la base de datos.
+        Session.query.filter_by(user_id=user.dni).delete()
+
+        # Se crea el JWT
+        access_token = create_access_token(identity=user.dni)
+        jti = get_jti(access_token)
+
+        # Se decodifica el token para poder ver el expiration date
+        decoded_token = decode_token(access_token)
+        expiration_time = datetime.fromtimestamp(decoded_token['exp'])
+        # logging.error(expiration_time) # Comentado como en tu código original
+
+        # Se crea el nuevo registro en la base de datos
         new_session = Session(
             id=jti,
-            user_id=dni,
+            user_id=user.dni,
             expires_at=expiration_time
         )
         db.session.add(new_session)
-        db.session.commit()
+        db.session.commit() # Hace la modificación
+
     except Exception as e:
         db.session.rollback()
-        # logging.error(f"Error al guardar la sesión: {e}")
+        logging.error(f"Error al procesar el login y la sesión: {e}") # Log más descriptivo
         return jsonify({"msg": "Error interno al procesar el login"}), 500
-
 
     # Si todo va bien, devuelve la respuesta
     response = jsonify({"msg": "login successful", "rol": user.rol})
