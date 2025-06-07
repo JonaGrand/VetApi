@@ -1,3 +1,4 @@
+````
 VetApi/
 ├── src/
 │   ├── database/ --> Conexión con la BD
@@ -17,13 +18,18 @@ VetApi/
 │   │   ├── customer_routes.py
 │   │   ├── pet_routes.py
 │   │   └── user_routes.py
-│   └── services/ --> Lógica de negocio
-│       └── ...
+│   ├── service/ --> Lógica de negocio
+│   │   ├── __init__.py
+│   │   └── ...
+│   └── tests/ --> Archivos de test varios
+│       ├── create_user.py --> Testeo creación de usuarios
+│       └── db_connection_test.py --> Testeo la conexión con la BD
 ├── BdVeterinaria.sql --> Archivo para la creación de la BD.
 ├── requirements.txt --> Paquetes necesarios para correr la app.
 ├── config.py --> Archivo con la configuración esencial de la App (flask, SqlAlchemy, ...)
-├── crate_user_test.py --> Archivo con usuario de test
 └── app.py --> Aplicación principal.
+
+````
 
 # 1. Ejecutar app Flask:
 

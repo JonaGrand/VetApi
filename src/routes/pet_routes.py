@@ -38,16 +38,6 @@ def get_pet_by_chip(num_chip):
 @pet_bp.route('/', methods=['POST'])
 @jwt_required()
 def create_pet():
-
-    # Obtener ID(dni) usuario actual.
-    current_user_dni = get_jwt_identity()
-    # Sacamos su rol desde la BD
-    current_user = User.query.filter_by(dni=current_user_dni).first()
-
-    # Verifica si el usuario actual tiene el rol de vet o gest
-#    if current_user.rol != 'vet' or current_user.role != 'gest':
-#        return jsonify({'message': 'Unauthorized: Only users with the rol vet/gest are able to create pets'}), 403
-
     data = request.get_json()
 
     num_chip = data.get('num_chip')

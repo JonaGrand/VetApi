@@ -39,17 +39,6 @@ def get_appointment_by_userid(dni):
 @appointment_bp.route('/', methods=['POST'])
 @jwt_required()
 def create_appointment():
-
-    # Obtener ID(dni) usuario actual.
-    current_user_dni = get_jwt_identity()
-    # Sacamos su rol desde la BD
-    current_user = User.query.filter_by(dni=current_user_dni).first()
-
-    # Verifica si el usuario actual tiene el rol de administrador
-#    if current_user.rol != 'gest' or current_user.rol != 'vet':
-#        logging.info(f"ROL USUARIO: {current_user.rol}")
-#        return jsonify({'message': 'Unauthorized: Only users with the rol gest or vet are able to create customers'}), 403
-
     data = request.get_json()
 
     # id = data['id']
