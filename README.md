@@ -1,3 +1,7 @@
+# VetApi
+
+## Estructura del Proyecto:
+
 ````
 VetApi/
 ├── src/
@@ -31,11 +35,55 @@ VetApi/
 
 ````
 
-# 1. Ejecutar app Flask:
+## Configuración Inicial y Ejecución de la Aplicación Flask:
 
-(Tienes que estar en la raiz del proyecto: VetApi/)
+(Asegúrate de estar en el directorio raíz del proyecto: `VetApi/`)
 
-**Aplicación principal:** python3 app.py
-**Tests:**
-- create_user_test.py:  python3 -m src.tests.create_user_test
-- db_test.py: python3 src.test.db_connection_test
+### 1. Entorno Virtual:
+1.  **Crear entorno virtual:**
+    ```bash
+    python3 -m venv .venv
+    ```
+2.  **Activar entorno virtual:**
+    *   **macOS/Linux:**
+        ```bash
+        source .venv/bin/activate
+        ```
+    *   **Windows (Git Bash o similar):**
+        ```bash
+        source .venv/Scripts/activate
+        ```
+    *   **Windows (Command Prompt o PowerShell):**
+        ```bash
+        .\.venv\Scripts\activate
+        ```
+
+### 2. Instalar Dependencias:
+Una vez activado el entorno virtual, instala los paquetes necesarios:
+```bash
+pip install -r requirements.txt
+```
+
+### 3. Crear la BD en Mysql:
+Se necesita tener una BD llamada "veterinary_db", este se puede crear en local. Se adjunta el 
+archivo "BdVeterinaria.sql" para ejecutarlo en Mysql y preparar la BD.
+
+### 4. Crear archivo de .env
+Crear un archivo .env en la raiz del proyecto (VetApi/), y añadir le siguiente contenido, adaptandolo:
+```
+# Aqui meter las variables de entorno
+
+# Configuración de la Base de Datos MySQL
+DB_USER="usuario BD"
+DB_PASSWORD="contraseña usuario BD"
+DB_HOST="localhost" # o la IP de tu servidor MySQL
+DB_PORT="3306"      # Puerto por defecto de MySQL
+DB_NAME="veterinary_db" # El nombre de tu base de datos (asegúrate de que exista)
+
+# SQLAlchemy Database URI
+SQLALCHEMY_DATABASE_URI="mysql+pymysql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}"
+SQLALCHEMY_TRACK_MODIFICATIONS=False
+
+# JWT
+JWT_KEY="Key segura de JWT"
+```
